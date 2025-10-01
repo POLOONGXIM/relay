@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tình Yêu Đặc Biệt</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Các hình trái tim bay */
+      .heart {
+        position: absolute;
+        opacity: 0.7;
+        z-index: 0;
+      }
+
+      /* Form đăng nhập */
+      .login-container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        z-index: 100;
+        position: relative;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .login-container h1 {
+        color: #e75480;
+        margin-bottom: 20px;
+        font-size: 2.2rem;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-group {
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ffafbd;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #fff;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #e75480;
+        box-shadow: 0 0 10px rgba(231, 84, 128, 0.3);
+      }
+
+      .btn {
+        background: linear-gradient(to right, #ffafbd, #e75480);
+        border: none;
+        padding: 12px;
+        border-radius: 10px;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(231, 84, 128, 0.4);
+      }
+
+      .error-message {
+        color: #e74c3c;
+        margin-top: 10px;
+        display: none;
+      }
+
+      /* Trang nội dung sau khi đăng nhập */
+      .content-container {
+        display: none;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 200;
+        background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+        overflow: hidden;
+      }
+
+      .header {
+        text-align: center;
+        padding: 20px;
+        color: white;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+      }
+
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Hiệu ứng động */
+      .love-effect {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      /* Các cặp đôi hoạt hình */
+      .couple {
+        position: absolute;
+        width: 80px;
+        height: 160px;
+        bottom: 0;
+      }
+
+      .person {
+        position: absolute;
+        width: 40px;
+        height: 80px;
+        border-radius: 50% 50% 40% 40%;
+        background: #ffafbd;
+      }
+
+      .person1 {
+        left: 0;
+        animation: walk1 5s infinite alternate ease-in-out;
+      }
+
+      .person2 {
+        right: 0;
+        animation: walk2 5s infinite alternate ease-in-out;
+      }
+
+      @keyframes walk1 {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(-5deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      @keyframes walk2 {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(5deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      /* Các câu nói về tình yêu */
+      .love-quotes {
+        margin-top: 50px;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .quote {
+        font-size: 1.5rem;
+        margin: 20px;
+        opacity: 0;
+        animation: fadeIn 5s infinite;
+        font-style: italic;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        70% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .quote:nth-child(2) {
+        animation-delay: 5s;
+      }
+      .quote:nth-child(3) {
+        animation-delay: 10s;
+      }
+      .quote:nth-child(4) {
+        animation-delay: 15s;
+      }
+
+      /* Nút đăng xuất */
+      .logout-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 300;
+        transition: all 0.3s;
+      }
+
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .quote {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Form đăng nhập -->
+    <div class="login-container">
+      <h1>❤️ Trái Tim Tình Yêu ❤️</h1>
+      <p>Nhập mật khẩu đặc biệt để khám phá thế giới tình yêu</p>
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="password">Mật khẩu tình yêu:</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Nhập mật khẩu"
+            required
+          />
+        </div>
+        <button type="submit" class="btn">Mở cánh cửa tình yêu</button>
+        <div class="error-message" id="errorMessage">
+          Mật khẩu không đúng. Hãy thử lại!
+        </div>
+      </form>
+    </div>
+
+    <!-- Trang nội dung sau khi đăng nhập -->
+    <div class="content-container" id="contentContainer">
+      <button class="logout-btn" id="logoutBtn">Đăng xuất</button>
+
+      <div class="header">
+        <h1>Thế Giới Tình Yêu Diệu Kỳ</h1>
+        <p>Nơi tình yêu tỏa sáng với những điều đẹp nhất</p>
+      </div>
+
+      <div class="love-quotes">
+        <div class="quote">
+          "Tình yêu không phải là tìm kiếm một người hoàn hảo, mà là học cách
+          yêu thương một người không hoàn hảo một cách hoàn hảo."
+        </div>
+        <div class="quote">
+          "Yêu là khi hạnh phúc của người khác trở thành hạnh phúc của chính
+          bạn."
+        </div>
+        <div class="quote">
+          "Tình yêu đích thực bắt đầu khi không còn gì để nhận, chỉ còn lại để
+          cho đi."
+        </div>
+        <div class="quote">
+          "Trong đôi mắt của bạn, tôi tìm thấy cả thiên đường."
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tạo các trái tim bay
+      function createHearts() {
+        const container = document.body;
+        const heartCount = 30;
+
+        for (let i = 0; i < heartCount; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.innerHTML = "❤️";
+
+          // Kích thước ngẫu nhiên
+          const size = Math.random() * 30 + 20;
+          heart.style.fontSize = `${size}px`;
+
+          // Vị trí ngẫu nhiên
+          heart.style.left = `${Math.random() * 100}vw`;
+          heart.style.top = `${Math.random() * 100}vh`;
+
+          // Tốc độ di chuyển ngẫu nhiên
+          const duration = Math.random() * 10 + 5;
+          const delay = Math.random() * 5;
+
+          heart.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+
+          container.appendChild(heart);
+        }
+      }
+
+      // Tạo hiệu ứng tình yêu khi click
+      function createLoveEffect(x, y) {
+        const effect = document.createElement("div");
+        effect.classList.add("love-effect");
+        effect.innerHTML = "💖";
+        effect.style.fontSize = "30px";
+        effect.style.left = `${x}px`;
+        effect.style.top = `${y}px`;
+        effect.style.position = "absolute";
+        effect.style.zIndex = "50";
+        effect.style.pointerEvents = "none";
+
+        document.body.appendChild(effect);
+
+        // Hiệu ứng
+        let opacity = 1;
+        let scale = 1;
+        const interval = setInterval(() => {
+          opacity -= 0.05;
+          scale += 0.1;
+          effect.style.opacity = opacity;
+          effect.style.transform = `scale(${scale})`;
+
+          if (opacity <= 0) {
+            clearInterval(interval);
+            effect.remove();
+          }
+        }, 50);
+      }
+
+      // Tạo các cặp đôi di chuyển
+      function createCouples() {
+        const container = document.getElementById("contentContainer");
+        const coupleCount = 5;
+
+        for (let i = 0; i < coupleCount; i++) {
+          const couple = document.createElement("div");
+          couple.classList.add("couple");
+
+          // Vị trí ngẫu nhiên
+          couple.style.left = `${Math.random() * 90}vw`;
+          couple.style.bottom = "0";
+
+          // Tạo hai người
+          const person1 = document.createElement("div");
+          person1.classList.add("person", "person1");
+
+          const person2 = document.createElement("div");
+          person2.classList.add("person", "person2");
+
+          couple.appendChild(person1);
+          couple.appendChild(person2);
+          container.appendChild(couple);
+        }
+      }
+
+      // Xử lý đăng nhập
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const password = document.getElementById("password").value;
+          const errorMessage = document.getElementById("errorMessage");
+
+          // Mật khẩu đúng (có thể thay đổi)
+          if (password === "ngoanxinhyeu") {
+            document.querySelector(".login-container").style.display = "none";
+            document.getElementById("contentContainer").style.display = "block";
+            createCouples();
+          } else {
+            errorMessage.style.display = "block";
+            // Hiệu ứng lắc
+            document.querySelector(".login-container").style.animation = "none";
+            setTimeout(() => {
+              document.querySelector(".login-container").style.animation =
+                "float 3s ease-in-out infinite";
+            }, 10);
+          }
+        });
+
+      // Xử lý đăng xuất
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          document.getElementById("contentContainer").style.display = "none";
+          document.querySelector(".login-container").style.display = "block";
+          document.getElementById("password").value = "";
+          document.getElementById("errorMessage").style.display = "none";
+        });
+
+      // Thêm hiệu ứng khi click vào trang
+      document.addEventListener("click", function (e) {
+        createLoveEffect(e.clientX, e.clientY);
+      });
+
+      // Khởi tạo các trái tim
+      createHearts();
+    </script>
+  </body>
+</html>
